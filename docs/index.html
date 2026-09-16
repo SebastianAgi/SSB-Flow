@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SSB-Flow | Simulator-Supervised Belief Flow</title>
+  <meta name="description"
+    content="Paper website for SSB-Flow, a simulator-supervised belief flow method for partially observed manipulation." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <div class="brand">SSB-Flow</div>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="#abstract">Abstract</a>
+        <a href="#method">Method</a>
+        <a href="#results">Results</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <p class="eyebrow">Robotics · Manipulation · Belief Learning</p>
+          <h1>Learning hidden physical properties from interaction.</h1>
+          <p class="lead">
+            Simulator-Supervised Belief Flow (SSB-Flow) trains a partially observing robotic policy to infer
+            task-relevant physical quantities from interaction history, using image and proprioceptive observations to
+            guide informative manipulation.
+          </p>
+          <div class="cta-row">
+            <a class="button primary" href="#abstract">Read Abstract</a>
+            <a class="button secondary" href="#results">View Results</a>
+          </div>
+          <div class="meta-row">
+            <span>ICRA 2027 Submission</span>
+            <span>Simulation-guided policy learning</span>
+          </div>
+        </div>
+
+        <div class="hero-card">
+          <div class="code-block">
+            <pre><code>belief_state ← posterior(samples | history)
+policy(a | obs, belief_state)
+objective ← task reward + belief supervision</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="abstract" class="section">
+      <div class="container narrow">
+        <div class="section-label">Abstract</div>
+        <h2>How can simulation efficiently teach a sensorimotor policy to gather information?</h2>
+        <p>
+          Hidden physical properties, such as mass and friction, substantially affect how a robot can optimally
+          manipulate objects. A privileged teacher directly accesses these properties, so its actions generally do not
+          demonstrate how to acquire missing information, creating a mismatch for a partially-observing learner, which
+          does not observe the privileged state during training or deployment.
+        </p>
+        <p>
+          We instead use a simulator to simultaneously supervise a learned approximation to the belief state and train a
+          policy conditioned on that approximation by reinforcement learning. Our method, Simulator-Supervised Belief
+          Flow (SSB-Flow), learns a sampleable posterior over task-relevant physical quantities from interaction
+          history, using high-dimensional image input alongside proprioceptive input. The policy consumes an encoding of
+          posterior samples, allowing it to use estimated uncertainty when selecting actions.
+        </p>
+        <p>
+          We compare SSB-Flow to three student-teacher approaches originally designed to use privileged information, as
+          well as a strong recurrent RL baseline. Across four challenging manipulation tasks, SSB-Flow achieves the
+          highest success rate on every task, averaging 93.1% versus 64.7% for the strongest alternative, an absolute
+          gap of 28.4%. These results support supervising physical-state inference as an effective use of privileged
+          information for partially observed manipulation.
+        </p>
+      </div>
+    </section>
+
+    <section id="method" class="section muted">
+      <div class="container">
+        <div class="section-label">Method</div>
+        <h2>Estimating belief, not just behavior.</h2>
+        <div class="card-grid">
+          <article class="card">
+            <h3>Privileged supervision</h3>
+            <p>The simulator supervises the actor's belief over task-relevant hidden physical parameters.
+            </p>
+          </article>
+          <article class="card">
+            <h3>Belief flow</h3>
+            <p>SSB-Flow's flow-matching posterior approximates the full multimodal belief.</p>
+          </article>
+          <article class="card">
+            <h3>Uncertainty-aware control</h3>
+            <p>The policy conditions on posterior samples to exploit uncertainty
+              when choosing
+              actions.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="results" class="section">
+      <div class="container narrow">
+        <div class="section-label">Results</div>
+        <h2>Consistent gains across difficult manipulation tasks.</h2>
+        <div class="task-gallery">
+          <figure class="task-card">
+            <img src="balance_front_az30_no_horizon.jpg"
+              alt="BALANCE task: an unevenly weighted rod next to a pedestal." />
+            <figcaption><strong>BALANCE</strong>Place an unevenly weighted rod on a pedestal.</figcaption>
+          </figure>
+          <figure class="task-card">
+            <img src="sort_front_az30_no_horizon.jpg" alt="SORT task: a cube next to colored bins on a table." />
+            <figcaption><strong>SORT</strong>Bin by hidden mass or friction.</figcaption>
+          </figure>
+          <figure class="task-card">
+            <img src="hidden_color_face3_front_az30_no_horizon.jpg"
+              alt="HIDDEN-COLOR task: a cube with an occluded downward face next to colored bins." />
+            <figcaption><strong>HIDDEN-COLOR</strong>Bin by the occluded downward face.</figcaption>
+          </figure>
+        </div>
+
+        <div class="perf-chart" role="img"
+          aria-label="Average success rate: best baseline 64.7 percent, SSB-Flow 93.1 percent, an absolute gap of 28.4 points">
+          <div class="perf-row">
+            <span class="perf-label">Best baseline</span>
+            <div class="perf-track">
+              <div class="perf-fill baseline" style="width: 64.7%">
+                <span class="perf-value">64.7%</span>
+              </div>
+            </div>
+          </div>
+          <div class="perf-row">
+            <span class="perf-label">SSB-Flow</span>
+            <div class="perf-track">
+              <div class="perf-fill ours" style="width: 93.1%">
+                <span class="perf-value">93.1%</span>
+              </div>
+            </div>
+          </div>
+          <p class="perf-note">Average success rate across four manipulation tasks — a <strong>+28.4 point</strong>
+            absolute gap.</p>
+        </div>
+
+        <figure class="figure-panel">
+          <img src="belief_visual_formatted.jpg" alt="Belief estimates over interaction on the HIDDEN-COLOR task." />
+          <figcaption>
+            Physical-state estimates during interaction on the HIDDEN-COLOR task. [1] Before any contact, mass and
+            hidden-color beliefs are near uniform,
+            and the friction beliefs sit at their prior — notably underestimating the true static friction. [2] The
+            first contact and failed flip sharpens the static-friction belief
+            to its true value; the mass belief narrows but remains overestimated, while dynamic friction temporarily
+            overshoots. [3] A second failed flip collapses both
+            the mass and dynamic-friction beliefs onto their true values. [4] With the physical parameters now
+            accurately estimated, the third interaction successfully
+            flips the object. [5] The first frame in which the hidden color is observed by the agent. [6] Object is
+            accurately sorted.
+          </figcaption>
+        </figure>
+
+        <figure class="figure-panel">
+          <img src="balance_com_timeline.png"
+            alt="Timeline of a robot balancing a multicolored rod on a pedestal by estimating its center of mass." />
+          <figcaption>
+            SSB-Flow uses a deep flow-matching-based state estimator, supervised by a simulator, to efficiently inform
+            a policy about uncertainty in the environment. Interactions help the state estimator to estimate physical
+            properties, in this case, the unknown Center-of-Mass (COM) of the multicolored rod, which enables the
+            policy to balance it on the blue pedestal. Top: A sequence of views during one episode. Bottom-left: The
+            deep-state estimator's belief samples for the COM. Bottom-right: The path of the estimated COM over the
+            course of the episode. (1) Before contact, the COM belief is near-uniform over the rod's extent. (2) The
+            first grasp and lift collapses the belief along the rod's long axis (x). (3) Re-grasping the upright rod
+            begins to resolve the remaining lateral (y) and height (z) uncertainty. (4) The COM is now sufficiently
+            localized, and the agent selects a grasp offset from the geometric center. (5) The agent transports the
+            rod to the pedestal. (6) It commits to the placement and successfully balances the rod.
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+  </main>
+
+  <footer id="contact" class="site-footer">
+    <div class="container footer-row">
+      <p>© 2026 SSB-Flow</p>
+      <a href="mailto:authors@example.edu">authors@example.edu</a>
+    </div>
+  </footer>
+</body>
+
+</html>
