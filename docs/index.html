@@ -4,9 +4,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SSB-Flow | Simulator-Supervised Belief Flow</title>
+  <title>Supervise the Belief, Not the Policy | SSB-Flow</title>
   <meta name="description"
-    content="Paper website for SSB-Flow, a simulator-supervised belief flow method for partially observed manipulation." />
+    content="Supervise the Belief, Not the Policy: Simulator-Supervised Belief for Partially-Observed Manipulation (SSB-Flow)." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -16,181 +16,384 @@
 <body>
   <header class="site-header">
     <div class="container nav">
-      <div class="brand">SSB-Flow</div>
+      <a class="brand" href="#top">SSB-Flow</a>
       <nav class="nav-links" aria-label="Main navigation">
         <a href="#abstract">Abstract</a>
         <a href="#method">Method</a>
+        <a href="#benchmark">Benchmark</a>
         <a href="#results">Results</a>
-        <a href="#contact">Contact</a>
       </nav>
     </div>
   </header>
 
-  <main>
+  <main id="top">
+    <!-- ============================== HERO ============================== -->
     <section class="hero">
       <div class="container hero-grid">
-        <div>
-          <p class="eyebrow">Robotics · Manipulation · Belief Learning</p>
-          <h1>Learning hidden physical properties from interaction.</h1>
-          <p class="lead">
-            Simulator-Supervised Belief Flow (SSB-Flow) trains a partially observing robotic policy to infer
-            task-relevant physical quantities from interaction history, using image and proprioceptive observations to
-            guide informative manipulation.
-          </p>
+        <div class="hero-text">
+          <h1>Supervise the Belief, Not the Policy</h1>
+          <p class="subtitle">Simulator-Supervised Belief for Partially-Observed Manipulation</p>
+          <p class="authors">Anonymous Authors</p>
+          <p class="venue">Under review at ICRA 2027</p>
           <div class="cta-row">
-            <a class="button primary" href="#abstract">Read Abstract</a>
-            <a class="button secondary" href="#results">View Results</a>
-          </div>
-          <div class="meta-row">
-            <span>ICRA 2027 Submission</span>
-            <span>Simulation-guided policy learning</span>
+            <!-- TODO: point at the anonymized code repository -->
+            <a class="button primary" href="#" aria-label="Code on GitHub">
+              <svg class="icon" viewBox="0 0 16 16" aria-hidden="true">
+                <path fill="currentColor"
+                  d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+              </svg>
+              Code
+            </a>
+            <!-- TODO: replace with the arXiv link once the preprint is posted -->
+            <span class="button secondary disabled" aria-disabled="true" title="arXiv preprint coming soon">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6M8 13h8M8 17h5" />
+              </svg>
+              arXiv <span class="soon">coming soon</span>
+            </span>
           </div>
         </div>
 
-        <div class="hero-card">
-          <div class="code-block">
-            <pre><code>belief_state ← posterior(samples | history)
-policy(a | obs, belief_state)
-objective ← task reward + belief supervision</code></pre>
+        <div class="hero-media">
+          <!-- TODO: hero demo video. Replace the placeholder div with e.g.
+               <video src="videos/hero.mp4" poster="real_hidden_color.jpg" autoplay muted loop playsinline></video> -->
+          <div class="video-slot hero-video">
+            <span class="play" aria-hidden="true"></span>
+            <span class="slot-label">Demo video (sim or real)</span>
           </div>
         </div>
       </div>
     </section>
 
+    <!-- ============================ ABSTRACT ============================ -->
     <section id="abstract" class="section">
       <div class="container narrow">
         <div class="section-label">Abstract</div>
-        <h2>How can simulation efficiently teach a sensorimotor policy to gather information?</h2>
-        <p>
-          Hidden physical properties, such as mass and friction, substantially affect how a robot can optimally
-          manipulate objects. A privileged teacher directly accesses these properties, so its actions generally do not
-          demonstrate how to acquire missing information, creating a mismatch for a partially-observing learner, which
-          does not observe the privileged state during training or deployment.
-        </p>
-        <p>
-          We instead use a simulator to simultaneously supervise a learned approximation to the belief state and train a
-          policy conditioned on that approximation by reinforcement learning. Our method, Simulator-Supervised Belief
-          Flow (SSB-Flow), learns a sampleable posterior over task-relevant physical quantities from interaction
-          history, using high-dimensional image input alongside proprioceptive input. The policy consumes an encoding of
-          posterior samples, allowing it to use estimated uncertainty when selecting actions.
-        </p>
-        <p>
-          We compare SSB-Flow to three student-teacher approaches originally designed to use privileged information, as
-          well as a strong recurrent RL baseline. Across four challenging manipulation tasks, SSB-Flow achieves the
-          highest success rate on every task, averaging 93.1% versus 64.7% for the strongest alternative, an absolute
-          gap of 28.4%. These results support supervising physical-state inference as an effective use of privileged
-          information for partially observed manipulation.
+        <p class="abstract">
+          How can simulation efficiently teach a visuomotor policy to gather information? Hidden physical properties,
+          such as mass and friction, substantially affect how a robot can optimally manipulate objects. A privileged
+          teacher directly accesses these properties, so its actions generally do not demonstrate how to acquire
+          missing information, creating a mismatch for a partially-observing learner, which does not observe the
+          privileged state during training or deployment. We instead use a simulator to simultaneously supervise a
+          learned approximation to the belief state and train a policy conditioned on that approximation by
+          reinforcement learning. Our method, Simulator-Supervised Belief Flow (SSB-Flow), learns a sampleable
+          posterior over task-relevant physical quantities from interaction history, using high-dimensional image
+          input alongside proprioceptive input. The policy consumes an encoding of posterior samples, allowing it to
+          use estimated uncertainty when selecting actions. We compare SSB-Flow to three student-teacher approaches
+          originally designed to use privileged information, as well as a strong recurrent RL baseline. Across four
+          challenging manipulation tasks, SSB-Flow achieves the highest success rate on every task, averaging 93.1%
+          versus 64.7% for the strongest alternative, an absolute gap of 28.4%. These results support supervising
+          physical-state inference as an effective use of privileged information for partially observed
+          manipulation.
         </p>
       </div>
     </section>
 
+    <!-- ============================= METHOD ============================= -->
     <section id="method" class="section muted">
       <div class="container">
         <div class="section-label">Method</div>
         <h2>Estimating belief, not just behavior.</h2>
+        <p class="section-intro">
+          A recurrent encoder summarizes wrist-camera images, proprioception, and previous actions. A conditional
+          flow-matching model, supervised by simulator state, samples from a posterior over task-relevant physical
+          quantities. A permutation-invariant encoder maps the samples to features for the actor, which is trained by
+          reinforcement learning and never receives privileged input.
+        </p>
+
+        <figure class="figure-panel">
+          <img src="method_overview.jpg"
+            alt="SSB-Flow architecture: observation to CNN, MLP, LSTM and flow-matching state estimator, producing belief samples that are set-encoded and fed to the actor." />
+          <figcaption>
+            <strong>SSB-Flow.</strong> Given recurrent history <i>h<sub>t</sub></i>, the state estimator samples its
+            belief using conditional flow matching. The belief samples reveal what the belief agrees on versus what
+            remains uncertain; when they split into several modes, they carry information that a mean and variance
+            alone would discard. A Deep Sets encoder <i>&phi;</i> maps the samples to <i>b<sub>t</sub></i>, and both
+            <i>&phi;</i> and the actor <i>&pi;</i> are trained with PPO on massively parallel environments.
+            <i>L</i><sub>flow</sub> trains only the estimator; <i>L</i><sub>PPO</sub> trains only the encoder and actor.
+          </figcaption>
+        </figure>
+
         <div class="card-grid">
           <article class="card">
-            <h3>Privileged supervision</h3>
-            <p>The simulator supervises the actor's belief over task-relevant hidden physical parameters.
-            </p>
+            <h3>Simulator-supervised estimation</h3>
+            <p>Privileged simulator state supervises a flow-matching posterior at every timestep. It is used as an
+              estimation target and critic input, never as an actor input.</p>
           </article>
           <article class="card">
-            <h3>Belief flow</h3>
-            <p>SSB-Flow's flow-matching posterior approximates the full multimodal belief.</p>
+            <h3>Sampleable, multimodal belief</h3>
+            <p>A learned velocity field turns Gaussian noise into <i>K</i> posterior samples. The samples can stay
+              multimodal while the interaction history is still ambiguous.</p>
           </article>
           <article class="card">
             <h3>Uncertainty-aware control</h3>
-            <p>The policy conditions on posterior samples to exploit uncertainty
-              when choosing
-              actions.</p>
+            <p>The actor sees a set encoding of the samples, so it can act on estimated uncertainty. It learns
+              information-gathering behavior from task reward alone.</p>
           </article>
         </div>
       </div>
     </section>
 
-    <section id="results" class="section">
-      <div class="container narrow">
-        <div class="section-label">Results</div>
-        <h2>Consistent gains across difficult manipulation tasks.</h2>
+    <!-- =========================== BENCHMARK ============================ -->
+    <section id="benchmark" class="section">
+      <div class="container">
+        <div class="section-label">Simulation Benchmark</div>
+        <h2>Hidden properties that only interaction reveals.</h2>
+        <p class="section-intro">
+          Three tasks (four variants) in which success depends on a hidden object property. The information the agent
+          needs leaves no trace in the environment's persistent state, so passive observation cannot reveal it. Only
+          the agent's own interaction history can.
+        </p>
+
         <div class="task-gallery">
           <figure class="task-card">
             <img src="balance_front_az30_no_horizon.jpg"
               alt="BALANCE task: an unevenly weighted rod next to a pedestal." />
-            <figcaption><strong>BALANCE</strong>Place an unevenly weighted rod on a pedestal.</figcaption>
+            <figcaption>
+              <strong>Balance</strong>
+              <span class="task-hidden">Hidden: mass distribution</span>
+              Pick up an unevenly weighted rod and place it upright on a pedestal without it toppling after release. The
+              center of mass shows itself only in how the rod behaves once lifted. A release gate forces the gripper
+              open and withdraws it, so a placement made too early cannot be corrected.
+            </figcaption>
           </figure>
           <figure class="task-card">
             <img src="sort_front_az30_no_horizon.jpg" alt="SORT task: a cube next to colored bins on a table." />
-            <figcaption><strong>SORT</strong>Bin by hidden mass or friction.</figcaption>
+            <figcaption>
+              <strong>Sort-Mass / Sort-Friction</strong>
+              <span class="task-hidden">Hidden: mass or dynamic friction</span>
+              Move the object into one of three bins according to its hidden mass or friction. Its appearance is fixed
+              across the parameter range, so the parameter appears only in the object's response to contact.
+            </figcaption>
           </figure>
           <figure class="task-card">
             <img src="hidden_color_face3_front_az30_no_horizon.jpg"
               alt="HIDDEN-COLOR task: a cube with an occluded downward face next to colored bins." />
-            <figcaption><strong>HIDDEN-COLOR</strong>Bin by the occluded downward face.</figcaption>
+            <figcaption>
+              <strong>Hidden-Color</strong>
+              <span class="task-hidden">Hidden: color of the downward face</span>
+              Sort a cube by the color of its downward face, which is occluded at episode start. The cube must be tilted
+              or flipped until that face enters the camera's view.
+            </figcaption>
           </figure>
         </div>
 
-        <div class="perf-chart" role="img"
-          aria-label="Average success rate: best baseline 64.7 percent, SSB-Flow 93.1 percent, an absolute gap of 28.4 points">
-          <div class="perf-row">
-            <span class="perf-label">Best baseline</span>
-            <div class="perf-track">
-              <div class="perf-fill baseline" style="width: 64.7%">
-                <span class="perf-value">64.7%</span>
-              </div>
-            </div>
-          </div>
-          <div class="perf-row">
-            <span class="perf-label">SSB-Flow</span>
-            <div class="perf-track">
-              <div class="perf-fill ours" style="width: 93.1%">
-                <span class="perf-value">93.1%</span>
-              </div>
-            </div>
-          </div>
-          <p class="perf-note">Average success rate across four manipulation tasks — a <strong>+28.4 point</strong>
-            absolute gap.</p>
+        <h3 class="subsection">Reward structure</h3>
+        <!-- TODO: fill in the reward terms (the paper points here for reward details) -->
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Task</th>
+                <th>Reward term</th>
+                <th>Description</th>
+                <th>Weight</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="placeholder-row">
+                <td>Balance</td>
+                <td>—</td>
+                <td>Reward terms to be added</td>
+                <td>—</td>
+              </tr>
+              <tr class="placeholder-row">
+                <td>Sort-Mass / Sort-Friction</td>
+                <td>—</td>
+                <td>Reward terms to be added</td>
+                <td>—</td>
+              </tr>
+              <tr class="placeholder-row">
+                <td>Hidden-Color</td>
+                <td>—</td>
+                <td>Reward terms to be added</td>
+                <td>—</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
+      </div>
+    </section>
 
+    <!-- ============================ RESULTS ============================= -->
+    <section id="results" class="section muted">
+      <div class="container">
+        <div class="section-label">Results</div>
+        <h2>Highest success on every task.</h2>
+
+        <h3 class="subsection">Training performance</h3>
         <figure class="figure-panel">
-          <img src="belief_visual_formatted.jpg" alt="Belief estimates over interaction on the HIDDEN-COLOR task." />
+          <img src="training_curves.jpg"
+            alt="Success rate against environment steps on SORT-MASS, SORT-FRICTION, HIDDEN-COLOR and BALANCE for RMA, A2D, SITT, PPO-LSTM and SSB-Flow." />
           <figcaption>
-            Physical-state estimates during interaction on the HIDDEN-COLOR task. [1] Before any contact, mass and
-            hidden-color beliefs are near uniform,
-            and the friction beliefs sit at their prior — notably underestimating the true static friction. [2] The
-            first contact and failed flip sharpens the static-friction belief
-            to its true value; the mass belief narrows but remains overestimated, while dynamic friction temporarily
-            overshoots. [3] A second failed flip collapses both
-            the mass and dynamic-friction beliefs onto their true values. [4] With the physical parameters now
-            accurately estimated, the third interaction successfully
-            flips the object. [5] The first frame in which the hidden color is observed by the agent. [6] Object is
-            accurately sorted.
+            Deployable-policy success rate against training environment steps. Lines are the mean over 3 runs per
+            method, smoothed over 5M steps; bands span the minimum to maximum across runs. Grey dotted: best oracle
+            success; grey solid: chance (three bins). RMA's student starts where its teacher converged (blue dotted).
           </figcaption>
         </figure>
+
+        <div class="table-wrap">
+          <table class="data-table results-table">
+            <caption>Simulation success rates: the peak of each method's curve within 500M training steps, averaged over
+              3 runs. The privileged oracle receives full-state inputs.</caption>
+            <thead>
+              <tr>
+                <th>Method</th>
+                <th>Balance</th>
+                <th>Sort-Mass</th>
+                <th>Sort-Friction</th>
+                <th>Hidden-Color</th>
+                <th>Average</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="oracle-row">
+                <td>Privileged oracle</td>
+                <td>95.9%</td>
+                <td>100.0%</td>
+                <td>100.0%</td>
+                <td>100.0%</td>
+                <td>99.0%</td>
+              </tr>
+              <tr>
+                <td>RMA</td>
+                <td>47.7%</td>
+                <td>48.2%</td>
+                <td>48.6%</td>
+                <td>20.5%</td>
+                <td>41.3%</td>
+              </tr>
+              <tr>
+                <td>SITT</td>
+                <td>17.9%</td>
+                <td>32.7%</td>
+                <td>33.4%</td>
+                <td>34.4%</td>
+                <td>29.6%</td>
+              </tr>
+              <tr>
+                <td>A2D</td>
+                <td>9.8%</td>
+                <td>85.8%</td>
+                <td>56.8%</td>
+                <td>0.3%</td>
+                <td>38.2%</td>
+              </tr>
+              <tr>
+                <td>PPO-LSTM</td>
+                <td>30.2%</td>
+                <td>67.3%</td>
+                <td>77.2%</td>
+                <td>84.2%</td>
+                <td>64.7%</td>
+              </tr>
+              <tr class="ours-row">
+                <td>SSB-Flow (ours)</td>
+                <td>83.4%</td>
+                <td>92.8%</td>
+                <td>96.7%</td>
+                <td>99.4%</td>
+                <td>93.1%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="subsection">Simulation demonstrations</h3>
+        <!-- TODO: replace each placeholder div with
+             <video src="videos/<task>.mp4" autoplay muted loop playsinline></video> -->
+        <div class="video-grid">
+          <figure class="video-card">
+            <div class="video-slot"><span class="play" aria-hidden="true"></span></div>
+            <figcaption>Balance</figcaption>
+          </figure>
+          <figure class="video-card">
+            <div class="video-slot"><span class="play" aria-hidden="true"></span></div>
+            <figcaption>Sort-Mass</figcaption>
+          </figure>
+          <figure class="video-card">
+            <div class="video-slot"><span class="play" aria-hidden="true"></span></div>
+            <figcaption>Sort-Friction</figcaption>
+          </figure>
+          <figure class="video-card">
+            <div class="video-slot"><span class="play" aria-hidden="true"></span></div>
+            <figcaption>Hidden-Color</figcaption>
+          </figure>
+        </div>
 
         <figure class="figure-panel">
           <img src="balance_com_timeline.png"
             alt="Timeline of a robot balancing a multicolored rod on a pedestal by estimating its center of mass." />
           <figcaption>
-            SSB-Flow uses a deep flow-matching-based state estimator, supervised by a simulator, to efficiently inform
-            a policy about uncertainty in the environment. Interactions help the state estimator to estimate physical
-            properties, in this case, the unknown Center-of-Mass (COM) of the multicolored rod, which enables the
-            policy to balance it on the blue pedestal. Top: A sequence of views during one episode. Bottom-left: The
-            deep-state estimator's belief samples for the COM. Bottom-right: The path of the estimated COM over the
-            course of the episode. (1) Before contact, the COM belief is near-uniform over the rod's extent. (2) The
-            first grasp and lift collapses the belief along the rod's long axis (x). (3) Re-grasping the upright rod
-            begins to resolve the remaining lateral (y) and height (z) uncertainty. (4) The COM is now sufficiently
-            localized, and the agent selects a grasp offset from the geometric center. (5) The agent transports the
-            rod to the pedestal. (6) It commits to the placement and successfully balances the rod.
+            <strong>Belief over the center of mass on Balance.</strong> Top: views during one episode. Bottom-left: the
+            estimator's belief samples for the COM. Bottom-right: the path of the estimated COM over the episode.
+            (1) Before contact, the COM belief is near-uniform over the rod's extent. (2) The first grasp and lift
+            collapses the belief along the rod's long axis (x). (3) Re-grasping the upright rod begins to resolve the
+            remaining lateral (y) and height (z) uncertainty. (4) The COM is now sufficiently localized, and the agent
+            selects a grasp offset from the geometric center. (5) The agent transports the rod to the pedestal. (6) It
+            releases the rod and successfully balances it.
           </figcaption>
         </figure>
+
+        <figure class="figure-panel">
+          <img src="belief_visual_formatted.jpg" alt="Belief estimates over interaction on the HIDDEN-COLOR task." />
+          <figcaption>
+            <strong>Physical-state estimates during interaction on Hidden-Color.</strong> [1] Before any contact, mass
+            and hidden-color beliefs are near-uniform, and the friction beliefs sit at their prior, notably
+            underestimating the true static friction. [2] The first contact and failed flip sharpen the static-friction
+            belief to its true value; the mass belief narrows but remains overestimated, while dynamic friction
+            temporarily overshoots. [3] A second failed flip collapses both the mass and dynamic-friction beliefs onto
+            their true values. [4] With the physical parameters now accurately estimated, the third interaction
+            successfully flips the object. [5] The first frame in which the hidden color is observed by the agent.
+            [6] The object is correctly sorted.
+          </figcaption>
+        </figure>
+
+        <h3 class="subsection">Real-robot demonstrations</h3>
+        <p class="section-intro">
+          Hidden-Color on a Franka FR3 with an 8&nbsp;cm white cube placed colored face down, so every trial requires
+          a flip. The policy observes a 54&nbsp;&times;&nbsp;96 RGB image from a wrist-mounted camera, proprioception,
+          and its previous action at 20&nbsp;Hz.
+        </p>
+
+        <div class="stat-row">
+          <div class="stat ours">
+            <span class="stat-value">24 / 30</span>
+            <span class="stat-label">SSB-Flow</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">0 / 30</span>
+            <span class="stat-label">PPO-LSTM</span>
+          </div>
+        </div>
+
+        <figure class="figure-panel">
+          <img src="real_hidden_color.jpg" alt="Franka FR3 tipping a white cube, revealing a red face, and sorting it into the red bin." />
+          <figcaption>
+            SSB-Flow on the Franka FR3 performing Hidden-Color. The policy first tips the cube over, then checks the
+            newly revealed side and confirms the color (red) before sorting it into the correct (red) bin.
+          </figcaption>
+        </figure>
+
+        <!-- TODO: real-robot videos -->
+        <div class="video-grid two">
+          <figure class="video-card">
+            <div class="video-slot"><span class="play" aria-hidden="true"></span></div>
+            <figcaption>Real robot: successful trial</figcaption>
+          </figure>
+          <figure class="video-card">
+            <div class="video-slot"><span class="play" aria-hidden="true"></span></div>
+            <figcaption>Real robot: additional trials</figcaption>
+          </figure>
+        </div>
       </div>
     </section>
   </main>
 
-  <footer id="contact" class="site-footer">
+  <footer class="site-footer">
     <div class="container footer-row">
-      <p>© 2026 SSB-Flow</p>
-      <a href="mailto:authors@example.edu">authors@example.edu</a>
+      <p>Anonymous submission to ICRA 2027</p>
     </div>
   </footer>
 </body>
