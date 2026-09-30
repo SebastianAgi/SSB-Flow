@@ -33,14 +33,14 @@
           </svg>
           <span>Real-robot videos</span>
         </a>
-        <!-- TODO: point at the anonymized code repository -->
-        <a class="pill" href="#">
+        <!-- TODO: turn into <a class="pill" href="..."> once the public release is cleared -->
+        <span class="pill disabled" title="Coming soon">
           <svg viewBox="0 0 16 16" aria-hidden="true">
             <path fill="currentColor"
               d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
           </svg>
-          <span>Code</span>
-        </a>
+          <span>Code (soon)</span>
+        </span>
         <!-- TODO: turn into <a class="pill" href="https://arxiv.org/abs/..."> once posted -->
         <span class="pill disabled" title="Coming soon">
           <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -126,7 +126,7 @@
   <section class="band light" id="method">
     <div class="container">
       <h2>Method</h2>
-      <img class="figure" src="method_overview.jpg"
+      <img class="figure diagram" src="architecture_v2.png"
         alt="SSB-Flow architecture: observation to CNN, MLP, LSTM and flow-matching state estimator, producing belief samples that are set-encoded and fed to the actor." />
       <div class="narrow">
         <p class="caption">
@@ -292,13 +292,20 @@
         </p>
       </div>
 
-      <!-- Sort-Mass / Sort-Friction: render with the same tool as the clips above, then list the files in
-           data-videos (comma-separated). Until then the box shows "Video coming soon". -->
-      <h3>Sort-Mass</h3>
-      <div class="playlist wide" data-ratio="1920/720" data-pause="1500" data-videos=""></div>
-
-      <h3>Sort-Friction</h3>
-      <div class="playlist wide" data-ratio="1920/720" data-pause="1500" data-videos=""></div>
+      <h3>Sort</h3>
+      <!-- Sort-Mass episodes for now; Sort-Friction clips (videos/sort_friction_ep0N.mp4) get interleaved once rendered. -->
+      <div class="playlist wide" data-poster="videos/sort_poster.jpg" data-ratio="1920/720" data-pause="1500"
+        data-videos="videos/sort_mass_ep01.mp4, videos/sort_mass_ep02.mp4, videos/sort_mass_ep03.mp4">
+      </div>
+      <div class="narrow">
+        <p class="caption">
+          Sort-Mass: one episode per bin; the card in each clip gives the mass range each zone stands for. The cube
+          looks identical across the parameter range, so its mass shows up only in its response to contact. Before
+          contact the mass belief spreads over all three bins; once the robot pushes the cube it narrows into one bin
+          (shaded), and the policy delivers the cube to the matching zone. Friction is randomized as a nuisance.
+          Sort-Friction clips coming soon.
+        </p>
+      </div>
     </div>
   </section>
 

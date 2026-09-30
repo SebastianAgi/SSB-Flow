@@ -3,7 +3,6 @@
   --muted: #7a7a7a;
   --caption: #8a8a8a;
   --accent: hsl(204, 86%, 35%);
-  --underline: #4a5fd5;
   --light: #f6f7f8;
   --rule: #e6e8eb;
   --dark: #363636;
@@ -67,11 +66,9 @@ h3 {
 h2 {
   display: table;
   margin: 0 auto 1.75rem;
-  padding-bottom: 0.45rem;
   font-size: 1.9rem;
   font-weight: 700;
   text-align: center;
-  background: linear-gradient(to right, var(--underline), transparent) bottom / 100% 2px no-repeat;
 }
 
 h3 {
@@ -206,6 +203,22 @@ h1 .accent {
   background: #eceef1;
 }
 
+/* White-background media (clips with plot panels, the training-curve figure) sit in a white card, so on a grey
+   band they read as a deliberate panel rather than a white hole; on a white band the hairline still frames them.
+   The transparent architecture diagram (.diagram) needs none. */
+.playlist:not(.fallback),
+.figure:not(.diagram) {
+  background: #fff;
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(20, 30, 50, 0.05), 0 4px 14px rgba(20, 30, 50, 0.06);
+}
+
+/* a still figure's own text runs to its edges: give it a white margin inside the card */
+.figure:not(.diagram) {
+  padding: 10px;
+}
+
 .playlist video {
   cursor: zoom-in;
 }
@@ -240,11 +253,50 @@ h1 .accent {
   transform: translate(50%, 50%);
 }
 
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-top: 1.1rem;  /* clears the card's border + shadow */
+}
+
 .dots {
   display: flex;
   justify-content: center;
   gap: 0.45rem;
-  margin-top: 0.6rem;
+}
+
+/* grey while playing (shows "pause"), accent blue while paused (shows "play") */
+.playpause {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.9rem;
+  height: 1.9rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #b5b5b5;
+  color: #fff;
+  cursor: pointer;
+}
+
+.playpause:hover {
+  background: #9a9a9a;
+}
+
+.playpause.is-paused {
+  background: var(--accent);
+}
+
+.playpause.is-paused:hover {
+  background: hsl(204, 86%, 28%);
+}
+
+.playpause svg {
+  width: 0.8rem;
+  height: 0.8rem;
 }
 
 .dots button {
