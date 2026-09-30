@@ -26,6 +26,13 @@
       <p class="authors">Anonymous Authors</p>
       <p class="venue">Under review at ICRA 2027</p>
       <div class="links">
+        <a class="pill" href="#real">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              d="M23 7l-7 5 7 5V7zM1 5h15v14H1z" />
+          </svg>
+          <span>Real-robot videos</span>
+        </a>
         <!-- TODO: point at the anonymized code repository -->
         <a class="pill" href="#">
           <svg viewBox="0 0 16 16" aria-hidden="true">
@@ -59,8 +66,40 @@
     </figure>
   </header>
 
+  <!-- ============================ REAL ROBOT ============================ -->
+  <section class="band light" id="real">
+    <div class="container">
+      <h2>Real-Robot Deployment</h2>
+      <h3>Balance</h3>
+      <div class="playlist wide" data-poster="videos/real_balance_poster.jpg" data-ratio="1600/1038" data-pause="1500"
+        data-videos="videos/real_balance_ep01.mp4, videos/real_balance_ep02.mp4"></div>
+      <div class="narrow">
+        <p class="caption">
+          Before each run the rod's hidden compartments are shown (2&times; speed): weights in one end cell in the first
+          episode, empty in the second. The policy then grasps, lifts and places the rod upright on the pedestal,
+          where it stays standing after release. Panels: belief over the rod's hidden center of mass, all three axes on one
+          shared &plusmn;5&nbsp;cm scale.
+        </p>
+      </div>
+
+      <h3>Hidden-Color</h3>
+      <div class="playlist wide" data-poster="videos/real_hidden_color_poster.jpg" data-ratio="1920/720"
+        data-pause="1500"
+        data-videos="videos/real_hidden_color_ep01.mp4, videos/real_hidden_color_ep02.mp4, videos/real_hidden_color_ep03.mp4">
+      </div>
+      <div class="narrow">
+        <p class="caption">
+          SSB-Flow succeeds in <b>24 of 30</b> real trials; PPO-LSTM, trained under the same randomization, in
+          <b>0 of 30</b>. An 8&nbsp;cm white cube is placed with its colored face down, so every trial requires a flip. The color
+          belief stays near-uniform until the policy tips the cube and the hidden face enters the wrist camera's view,
+          then commits, and the cube is sorted into the matching bin (red, green and blue episodes). The inset is the policy's 54&nbsp;&times;&nbsp;96 wrist-camera input.
+        </p>
+      </div>
+    </div>
+  </section>
+
   <!-- ============================= ABSTRACT ============================= -->
-  <section class="band light" id="abstract">
+  <section class="band" id="abstract">
     <div class="container narrow">
       <h2>Abstract</h2>
       <p class="prose">
@@ -84,7 +123,7 @@
   </section>
 
   <!-- ============================== METHOD ============================== -->
-  <section class="band" id="method">
+  <section class="band light" id="method">
     <div class="container">
       <h2>Method</h2>
       <img class="figure" src="method_overview.jpg"
@@ -104,7 +143,7 @@
   </section>
 
   <!-- ============================ BENCHMARK ============================= -->
-  <section class="band light" id="benchmark">
+  <section class="band" id="benchmark">
     <div class="container">
       <h2>Simulation Benchmark</h2>
       <div class="narrow">
@@ -147,7 +186,7 @@
   </section>
 
   <!-- ============================== RESULTS ============================= -->
-  <section class="band" id="results">
+  <section class="band light" id="results">
     <div class="container">
       <h2>Results</h2>
       <img class="figure" src="training_curves.jpg"
@@ -230,7 +269,7 @@
   </section>
 
   <!-- ====================== SIMULATION DEMONSTRATIONS =================== -->
-  <section class="band light" id="simulation">
+  <section class="band" id="simulation">
     <div class="container">
       <h2>Belief During Interaction</h2>
       <div class="narrow">
@@ -260,30 +299,6 @@
 
       <h3>Sort-Friction</h3>
       <div class="playlist wide" data-ratio="1920/720" data-pause="1500" data-videos=""></div>
-    </div>
-  </section>
-
-  <!-- ============================ REAL ROBOT ============================ -->
-  <section class="band" id="real">
-    <div class="container">
-      <h2>Real-Robot Deployment</h2>
-      <div class="narrow">
-        <p class="prose">
-          We deploy Hidden-Color on a Franka FR3 with an 8&nbsp;cm white cube placed colored face down, so every trial
-          requires a flip. The policy observes a 54&nbsp;&times;&nbsp;96 RGB image from a wrist-mounted camera,
-          proprioception, and its previous action at 20&nbsp;Hz. SSB-Flow succeeds in <b>24 of 30</b> trials;
-          PPO-LSTM, trained under the same randomization, succeeds in 0 of 30.
-        </p>
-      </div>
-
-      <!-- TODO: add real-robot videos -->
-      <div class="playlist wide" data-poster="real_hidden_color.jpg" data-ratio="2300/330" data-videos=""></div>
-      <div class="narrow">
-        <p class="caption">
-          The policy tips the cube over, checks the newly revealed side, confirms the color (red), and sorts it into
-          the red bin.
-        </p>
-      </div>
     </div>
   </section>
 
