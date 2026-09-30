@@ -293,17 +293,17 @@
       </div>
 
       <h3>Sort</h3>
-      <!-- Sort-Mass episodes for now; Sort-Friction clips (videos/sort_friction_ep0N.mp4) get interleaved once rendered. -->
+      <!-- Alternates Sort-Mass and Sort-Friction (two policies, same env), low -> mid -> high bin. -->
       <div class="playlist wide" data-poster="videos/sort_poster.jpg" data-ratio="1920/720" data-pause="1500"
-        data-videos="videos/sort_mass_ep01.mp4, videos/sort_mass_ep02.mp4, videos/sort_mass_ep03.mp4">
+        data-videos="videos/sort_mass_ep01.mp4, videos/sort_friction_ep01.mp4, videos/sort_mass_ep02.mp4, videos/sort_friction_ep02.mp4, videos/sort_mass_ep03.mp4, videos/sort_friction_ep03.mp4">
       </div>
       <div class="narrow">
         <p class="caption">
-          Sort-Mass: one episode per bin; the card in each clip gives the mass range each zone stands for. The cube
-          looks identical across the parameter range, so its mass shows up only in its response to contact. Before
-          contact the mass belief spreads over all three bins; once the robot pushes the cube it narrows into one bin
-          (shaded), and the policy delivers the cube to the matching zone. Friction is randomized as a nuisance.
-          Sort-Friction clips coming soon.
+          Episodes alternate between Sort-Mass and Sort-Friction, one per bin; the card in each clip gives the range
+          each zone stands for. The cube looks identical across the parameter range, so its mass or dynamic friction
+          shows up only in its response to contact. Before contact the belief over the sorted variable spreads over
+          all three bins; once the robot pushes the cube it narrows into one bin (shaded), and the policy delivers the
+          cube to the matching zone. The other physical properties are randomized as nuisance variables.
         </p>
       </div>
     </div>
