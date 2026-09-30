@@ -340,11 +340,6 @@ tr.ours td {
   font-weight: 700;
 }
 
-tbody.todo td {
-  color: var(--muted);
-  font-style: italic;
-}
-
 /* ---------- Footer ---------- */
 
 .footer {
